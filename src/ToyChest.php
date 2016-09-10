@@ -2,6 +2,10 @@
 
 namespace ToyChest;
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 use Interop\Container\ContainerInterface;
 use ArrayAccess;
 
@@ -10,7 +14,7 @@ use ArrayAccess;
  */
 class ToyChest implements ArrayAccess, ContainerInterface
 {
-    /*
+    /**
      * @var array
      *      The container which holds all objects
      */
@@ -18,8 +22,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $name
-     * @return mixed|null
-     *      Returns null if the dependency isn't set
+     *      The key of the dependency
+     * @return mixed
+     *      The dependency
+     * @throws \Exception
+     *      When trying to acccess an invalid member of the container
      */
     public function __get($name)
     {
@@ -32,8 +39,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $name
+     *      They to set for the dependency
      * @param mixed $value
-     * @param |Exception
+     *      The dependency
+     * @throws |Exception
+     *      When trying to set an invalid member of the container
      */
     public function __set($name, $value)
     {
@@ -46,6 +56,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @return bool
+     *      True if the key exists in the container
      */
     public function offsetExists($offset)
     {
@@ -53,7 +64,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
     }
 
     /**
+     * @param string $offset
+     *      The key for the dependency
      * @return mixed
+     *      The dependency
+
      */
     public function offsetGet($offset)
     {
@@ -62,7 +77,9 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $offset
+     *      The key to set for the dependency
      * @param mixed $value
+     *      The dependency to set
      */
     public function offsetSet($offset, $value)
     {
@@ -71,6 +88,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $offset
+     *      The key to the depenency to remove
      */
     public function offsetUnset($offset)
     {
@@ -79,7 +97,9 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $id
+     *      The key of the dependency
      * @return mixed
+     *      The dependency
      */
     public function get($id)
     {
@@ -92,7 +112,9 @@ class ToyChest implements ArrayAccess, ContainerInterface
 
     /**
      * @param string $id
+     *      The key of the dependency
      * @return bool
+     *      True if it exists
      */
     public function has($id)
     {
