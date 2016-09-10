@@ -7,23 +7,21 @@ class ToyChestTestCase extends PHPUnitTestCase
 {
     public function testToyChest()
     {
-        $contaienr = new ToyChest();
+        $container = new ToyChest();
 
         $container['array'] = ['key' => 'value'];
         $this->assertArrayHasKey('key', $container['array']);
 
         $container['object'] = function ($container) {
-            $newClass = new class
+            return new class
             {
                 public function theClassExists()
                 {
                     return true;
                 }
             };
-
-            return $newClass;
         };
 
-        $this->assertTrue($container['object']>theClassExists());
+        $this->assertTrue($container['object']->theClassExists());
     }
 }

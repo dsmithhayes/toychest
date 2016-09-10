@@ -14,7 +14,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
      * @var array
      *      The container which holds all objects
      */
-    private static $container;
+    private $container;
 
     /**
      * @param string $name
@@ -23,7 +23,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function __get($name)
     {
-        if (!array_key_exists($name, self::$container)) {
+        if (!array_key_exists($name, $this->container)) {
             throw new \Exception('Key not found: ' . $name);
         }
 
@@ -37,11 +37,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function __set($name, $value)
     {
-        if (!array_key_exists($name, self::$container)) {
+        if (!array_key_exists($name, $this->container)) {
             throw new \Exception('Key not found: ' . $name);
         }
 
-        self::$container[$name] = $value;
+        $this->container[$name] = $value;
     }
 
     /**
@@ -66,7 +66,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function offsetSet($offset, $value)
     {
-        self::$container[$offset] = $value;
+        $this->container[$offset] = $value;
     }
 
     /**
@@ -74,7 +74,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function offsetUnset($offset)
     {
-        unset(self::$container[$offset]);
+        unset($this->container[$offset]);
     }
 
     /**
@@ -83,11 +83,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function get($id)
     {
-        if (is_callable(self::$container[$id])) {
-            return self::$container[$id]($this);
+        if (is_callable($this->container[$id])) {
+            return $this->container[$id]($this);
         }
 
-        return self::$container[$id];
+        return $this->container[$id];
     }
 
     /**
@@ -96,6 +96,6 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function has($id)
     {
-        return array_key_exists($id, self::$container);
+        return array_key_exists($id, $this->container);
     }
 }
