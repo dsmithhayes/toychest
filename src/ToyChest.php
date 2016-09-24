@@ -7,6 +7,7 @@ namespace ToyChest;
  */
 
 use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\NotFoundException;
 use ArrayAccess;
 
 /**
@@ -100,9 +101,14 @@ class ToyChest implements ArrayAccess, ContainerInterface
      *      The key of the dependency
      * @return mixed
      *      The dependency
+     * @throws \Interop\Container\Exception\NotFoundException
      */
     public function get($id)
     {
+        if (!$this->has($id)) {
+            throw new NotFoundException("'{$id}' not found...");
+        }
+
         if (is_callable($this->container[$id])) {
             return $this->container[$id]($this);
         }
