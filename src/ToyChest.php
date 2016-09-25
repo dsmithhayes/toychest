@@ -26,15 +26,11 @@ class ToyChest implements ArrayAccess, ContainerInterface
      *      The key of the dependency
      * @return mixed
      *      The dependency
-     * @throws \Exception
+     * @throws \Interop\Container\Exception\NotFoundException
      *      When trying to acccess an invalid member of the container
      */
     public function __get($name)
     {
-        if (!array_key_exists($name, $this->container)) {
-            throw new \Exception('Key not found: ' . $name);
-        }
-
         return $this->get($name);
     }
 
@@ -48,10 +44,6 @@ class ToyChest implements ArrayAccess, ContainerInterface
      */
     public function __set($name, $value)
     {
-        if (!array_key_exists($name, $this->container)) {
-            throw new \Exception('Key not found: ' . $name);
-        }
-
         $this->container[$name] = $value;
     }
 
@@ -102,6 +94,7 @@ class ToyChest implements ArrayAccess, ContainerInterface
      * @return mixed
      *      The dependency
      * @throws \Interop\Container\Exception\NotFoundException
+     *      When the dependency doesn't exist
      */
     public function get($id)
     {
